@@ -484,7 +484,7 @@ Please enroll an MFA factor in the Okta Web UI first!""")
             # print out the factors and let the user select
             for i, factor in enumerate(factors):
                 factor_name = self._build_factor_name(factor)
-                if factor_name is not "":
+                if factor_name != "":
                     print('[ %d ] %s' % (i, factor_name))
             selection = input("Selection: ")
 
