@@ -59,6 +59,8 @@ of roles assigned to you.""" % self.role)
         arn_region = principal_arn.split(':')[1]
         if arn_region == 'aws-us-gov':
             sts = boto3.client('sts', region_name='us-gov-west-1')
+        elif arn_region == 'aws-cn':
+            sts = boto3.client('sts', region_name='cn-north-1')
         else:
             sts = boto3.client('sts')
 
