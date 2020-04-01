@@ -151,7 +151,7 @@ of roles assigned to you.""" % self.role)
         return roles
 
     @staticmethod
-    def __create_options_from(roles, assertion, lookup=True):
+    def __create_options_from(roles, assertion, lookup=False):
         options = []
         for index, role in enumerate(roles):
             if lookup:
