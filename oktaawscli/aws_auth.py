@@ -12,10 +12,11 @@ from botocore.exceptions import ClientError
 class AwsAuth():
     """ Methods to support AWS authentication using STS """
 
-    def __init__(self, profile, okta_profile, verbose, logger):
+    def __init__(self, profile, okta_profile, lookup, verbose, logger):
         home_dir = os.path.expanduser('~')
         self.creds_dir = home_dir + "/.aws"
         self.creds_file = self.creds_dir + "/credentials"
+        self.lookup = lookup
         self.profile = profile
         self.verbose = verbose
         self.logger = logger
@@ -28,19 +29,6 @@ class AwsAuth():
         if parser.has_option(okta_profile, 'role'):
             self.role = parser.get(okta_profile, 'role')
             self.logger.debug("Setting AWS role to %s" % self.role)
-    
-    @staticmethod
-    def get_aliases(assertion, role):
-        """ Choose AWS alias from SAML assertion """
-        principal_arn, role_arn = role
-        creds = AwsAuth.get_sts_token(role_arn, principal_arn, assertion, duration=900, logger=logger)
-        access_key_id = creds['AccessKeyId']
-        secret_access_key = creds['SecretAccessKey']
-        session_token = creds['SessionToken']
-        session_token_expiry = creds['Expiration']
-        client = boto3.client('iam', aws_access_key_id=access_key_id, aws_secret_access_key=secret_access_key, aws_session_token=session_token)
-        alias = (client.list_account_aliases())['AccountAliases'][0]
-        return alias
 
     def choose_aws_role(self, assertion):
         """ Choose AWS role from SAML assertion """
@@ -56,7 +44,7 @@ class AwsAuth():
 of roles assigned to you.""" % self.role)
                 self.logger.info("Please choose a role.")
 
-        role_options = self.__create_options_from(roles, assertion)
+        role_options = self.__create_options_from(roles, assertion, self.lookup)
         for option in role_options:
             print(option)
 
@@ -163,12 +151,25 @@ of roles assigned to you.""" % self.role)
         return roles
 
     @staticmethod
-    def __create_options_from(roles, assertion):
+    def __create_options_from(roles, assertion, lookup=False):
         options = []
         for index, role in enumerate(roles):
-            alias = AwsAuth.get_aliases(roles, assertion)
-            rolealias = alias + ' - ' + role.role_arn.split(':')[5]
-            options.append("%d: %s" % (index + 1, rolealias))
+            if lookup:
+                creds = AwsAuth.get_sts_token(role.role_arn, role.principal_arn, assertion, duration=900)
+                access_key_id = creds['AccessKeyId']
+                secret_access_key = creds['SecretAccessKey']
+                session_token = creds['SessionToken']
+                client = boto3.client('iam',
+                                      aws_access_key_id = access_key_id,
+                                      aws_secret_access_key = secret_access_key,
+                                      aws_session_token = session_token)
+                alias = client.list_account_aliases()['AccountAliases'][0]
+                rolename = role.role_arn.split(':')[5]
+                options.append('{i}: {accname} - {rolename}'.format(i=index+1,
+                                                                  accname = alias,
+                                                                  rolename = rolename))
+            else:
+                options.append("%d: %s" % (index + 1, role.role_arn))
         return options
 
     def __find_predefined_role_from(self, roles):
