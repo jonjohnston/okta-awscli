@@ -159,6 +159,7 @@ of roles assigned to you.""" % self.role)
             secret_access_key = creds['SecretAccessKey']
             session_token = creds['SessionToken']
             arn_region = role.principal_arn.split(':')[1]
+            print(arn_region)
             if arn_region == 'aws-us-gov':
                 iam = boto3.client('iam', region_name='us-gov-west-1')
             elif arn_region == 'aws-cn':
