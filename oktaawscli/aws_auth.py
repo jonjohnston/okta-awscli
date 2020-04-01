@@ -165,7 +165,8 @@ of roles assigned to you.""" % self.role)
                 iam_region = 'cn-north-1'
             else:
                 iam_region = 'us-east-1'
-            client = boto3.client(aws_access_key_id = access_key_id,
+            client = boto3.client('iam',
+                                  aws_access_key_id = access_key_id,
                                   aws_secret_access_key = secret_access_key,
                                   aws_session_token = session_token,
                                   region_name = iam_region)
