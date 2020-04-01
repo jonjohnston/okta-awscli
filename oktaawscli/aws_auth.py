@@ -159,16 +159,16 @@ of roles assigned to you.""" % self.role)
             secret_access_key = creds['SecretAccessKey']
             session_token = creds['SessionToken']
             arn_region = role.principal_arn.split(':')[1]
-            print(arn_region)
             if arn_region == 'aws-us-gov':
-                iam = boto3.client('iam', region_name='us-gov-west-1')
+                iam_region = 'us-gov-west-1'
             elif arn_region == 'aws-cn':
-                iam = boto3.client('iam', region_name='cn-north-1')
+                iam_region = 'cn-north-1'
             else:
-                iam = boto3.client('iam')
-            client = iam.client(aws_access_key_id = access_key_id,
+                iam_region = 'us-east-1'
+            client = boto3.client(aws_access_key_id = access_key_id,
                                   aws_secret_access_key = secret_access_key,
-                                  aws_session_token = session_token)
+                                  aws_session_token = session_token,
+                                  region_name = iam_region)
             alias = client.list_account_aliases()['AccountAliases'][0]
             rolename = role.role_arn.split(':')[5]
             options.append('{i}: {accname} - {rolename}'.format(i=index+1,
