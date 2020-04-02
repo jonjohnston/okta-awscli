@@ -17,6 +17,9 @@ def get_credentials(aws_auth, okta_profile, profile,
     okta = OktaAuth(okta_profile, verbose, logger, totp_token, okta_auth_config)
 
     _, assertion = okta.get_assertion()
+    if verbose:
+        print("Getting aliases can take time")
+    print("Please wait while role list generated")
     role = aws_auth.choose_aws_role(assertion)
     principal_arn, role_arn = role
 
