@@ -153,7 +153,7 @@ of roles assigned to you.""" % self.role)
     @staticmethod
     def __create_options_from(roles, assertion):
         options = []
-        vaultrole = "vault-api"
+        vaultrole = "vaultops-api"
         for index, role in enumerate(roles):
             if vaultrole in role.role_arn:
                 creds = AwsAuth.get_sts_token(role.role_arn, role.principal_arn, assertion, duration=900)
