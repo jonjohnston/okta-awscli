@@ -154,25 +154,26 @@ of roles assigned to you.""" % self.role)
     def __create_options_from(roles, assertion):
         options = []
         for index, role in enumerate(roles):
-            creds = AwsAuth.get_sts_token(role.role_arn, role.principal_arn, assertion, duration=900)
-            access_key_id = creds['AccessKeyId']
-            secret_access_key = creds['SecretAccessKey']
-            session_token = creds['SessionToken']
-            arn_region = role.principal_arn.split(':')[1]
-            if arn_region == 'aws-us-gov':
-                iam_region = 'us-gov-west-1'
-            elif arn_region == 'aws-cn':
-                iam_region = 'cn-north-1'
-            else:
-                iam_region = 'us-east-1'
-            client = boto3.client('iam',
+            if vaultrole in role.role_arn:
+                creds = AwsAuth.get_sts_token(role.role_arn, role.principal_arn, assertion, duration=900)
+                access_key_id = creds['AccessKeyId']
+                secret_access_key = creds['SecretAccessKey']
+                session_token = creds['SessionToken']
+                arn_region = role.principal_arn.split(':')[1]
+                if arn_region == 'aws-us-gov':
+                    iam_region = 'us-gov-west-1'
+                elif arn_region == 'aws-cn':
+                    iam_region = 'cn-north-1'
+                else:
+                    iam_region = 'us-east-1'
+                client = boto3.client('iam',
                                   aws_access_key_id = access_key_id,
                                   aws_secret_access_key = secret_access_key,
                                   aws_session_token = session_token,
                                   region_name = iam_region)
-            alias = client.list_account_aliases()['AccountAliases'][0]
-            rolename = role.role_arn.split(':')[5]
-            options.append('{i}: {accname} - {rolename}'.format(i=index+1,
+                alias = client.list_account_aliases()['AccountAliases'][0]
+                rolename = role.role_arn.split(':')[5]
+                options.append('{i}: {accname} - {rolename}'.format(i=index+1,
                                                               accname = alias,
                                                               rolename = rolename))
         return options
