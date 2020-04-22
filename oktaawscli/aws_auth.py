@@ -6,6 +6,7 @@ import xml.etree.ElementTree as ET
 from collections import namedtuple
 from configparser import RawConfigParser
 import boto3
+import sys
 from botocore.exceptions import ClientError
 
 
