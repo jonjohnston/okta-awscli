@@ -15,7 +15,7 @@ class AwsAuth():
     def __init__(self, profile, okta_profile, lookup, verbose, logger):
         home_dir = os.path.expanduser('~')
         self.creds_dir = home_dir + "/.aws"
-        self.creds_file = self.creds_dir + "/credentials"
+        self.creds_file = self.creds_dir + "/vault-credentials"
         self.lookup = lookup
         self.profile = profile
         self.verbose = verbose
