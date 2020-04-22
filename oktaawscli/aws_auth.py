@@ -148,7 +148,7 @@ of roles assigned to you.""" % self.role)
         for saml2attribute in root.iter('{urn:oasis:names:tc:SAML:2.0:assertion}Attribute'):
             if saml2attribute.get('Name') == aws_attribute_role:
                 for saml2attributevalue in saml2attribute.iter(attribute_value_urn):
-                    print(saml2attributevalue)
+                    print(saml2attributevalue.text)
                     roles.append(role_tuple(*saml2attributevalue.text.split(',')))
         return roles
 
