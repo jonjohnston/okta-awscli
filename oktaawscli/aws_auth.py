@@ -45,6 +45,9 @@ of roles assigned to you.""" % self.role)
                 self.logger.info("Please choose a role.")
 
         role_options = self.__create_options_from(roles, assertion)
+        if not option:
+            print("You do not have access to use vaultops-api")
+            sys.exit()
         for option in role_options:
             print(option)
 
