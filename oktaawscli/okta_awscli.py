@@ -77,7 +77,7 @@ Skips STS credentials validation.')
 @click.option('--okta-profile', help="Name of the profile to use in .okta-aws. \
 If none is provided, then the default profile will be used.\n")
 @click.option('--profile', help="Name of the profile to store temporary \
-credentials in ~/.aws/credentials. If profile doesn't exist, it will be \
+credentials in ~/.aws/vault-credentials. If profile doesn't exist, it will be \
 created. If omitted, credentials will output to console.\n")
 @click.option('-c', '--cache', is_flag=True, help='Cache the default profile credentials \
 to ~/.okta-credentials.cache\n')
