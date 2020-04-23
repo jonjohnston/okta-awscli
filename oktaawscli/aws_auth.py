@@ -2,9 +2,13 @@
 # pylint: disable=C0325
 import os
 import base64
+import sys
 import xml.etree.ElementTree as ET
 from collections import namedtuple
-from configparser import RawConfigParser
+if sys.version_info > (3,0):
+    from configparser import RawConfigParser
+else:
+    from ConfigParser import RawConfigParser
 import boto3
 from botocore.exceptions import ClientError
 
@@ -126,11 +130,17 @@ of roles assigned to you.""" % self.role)
             config.read(self.creds_file)
 
         if not config.has_section(profile):
-            config.add_section(profile)
-
-        config.set(profile, 'aws_access_key_id', access_key_id)
-        config.set(profile, 'aws_secret_access_key', secret_access_key)
-        config.set(profile, 'aws_session_token', session_token)
+            try:
+                config.add_section(profile)
+            except:
+                pass
+        if profile == 'default':
+            dprofile = 'DEFAULT'
+        else:
+            dprofile = profile
+        config.set(dprofile, 'aws_access_key_id', access_key_id)
+        config.set(dprofile, 'aws_secret_access_key', secret_access_key)
+        config.set(dprofile, 'aws_session_token', session_token)
 
         with open(self.creds_file, 'w+') as configfile:
             config.write(configfile)

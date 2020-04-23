@@ -6,8 +6,12 @@ import time
 import requests
 import re
 from codecs import decode
-from urllib.parse import parse_qs
-from urllib.parse import urlparse
+if sys.version_info > (3, 0):
+    from urllib.parse import parse_qs
+    from urllib.parse import urlparse
+else:
+    from urlparse import parse_qs
+    from urlparse import urlparse
 
 from bs4 import BeautifulSoup as bs
 

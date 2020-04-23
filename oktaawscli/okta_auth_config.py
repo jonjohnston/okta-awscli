@@ -1,8 +1,11 @@
 """ Config helper """
 
 import os
-
-from configparser import RawConfigParser
+import sys
+if sys.version_info > (3, 0):
+    from configparser import RawConfigParser
+else:
+    from ConfigParser import RawConfigParser
 from getpass import getpass
 
 try:
