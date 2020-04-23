@@ -138,7 +138,7 @@ of roles assigned to you.""" % self.role)
                 config.add_section(profile)
             except:
                 pass
-        if profile = 'default':
+        if profile == 'default':
             dpprofile = 'DEFAULT'
         else:
             dprofile = profile
