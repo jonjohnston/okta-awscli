@@ -19,7 +19,7 @@ if [ -z "$oktap" ]; then
 	exit 1
 fi
 
-okta-awscli --okta-profile $oktap --profile default --force
+okta-awscli --okta-profile $oktap --profile Test --force
 if [ ! -f ~/.aws/vault-credentials ]; then
 	echo "Credentials not generated"
 	exit 1
