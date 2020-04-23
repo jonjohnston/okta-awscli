@@ -1,0 +1,64 @@
+[default]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+
+[vaultinfrastructure]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::734313857620:role/vaultops-api
+
+[734313857620]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::734313857620:role/vaultops-api
+
+[vaultprod]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::175565503192:role/vaultops-api
+
+[175565503192]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::175565503192:role/vaultops-api
+
+[vaultdev]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::543916728216:role/vaultops-api
+
+[543916728216]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::543916728216:role/vaultops-api
+
+[vaultclusterdev]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::832524175637:role/vaultops-api
+
+[832524175637]
+base-url = veevasys.okta.com    
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::832524175637:role/vaultops-api
+
+[vaultclusterqa]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::042021920108:role/vaultops-api
+
+[042021920108]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+role = arn:aws:iam::042021920108:role/vaultops-api

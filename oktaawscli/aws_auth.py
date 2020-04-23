@@ -2,9 +2,13 @@
 # pylint: disable=C0325
 import os
 import base64
+import sys
 import xml.etree.ElementTree as ET
 from collections import namedtuple
-from configparser import RawConfigParser
+if sys.version_info > (3,0):
+    from configparser import RawConfigParser
+else:
+    from ConfigParser import RawConfigParser
 import boto3
 import sys
 from botocore.exceptions import ClientError
