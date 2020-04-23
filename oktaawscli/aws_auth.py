@@ -134,7 +134,10 @@ of roles assigned to you.""" % self.role)
             config.read(self.creds_file)
 
         if not config.has_section(profile):
-            config.add_section(profile)
+            try:
+                config.add_section(profile)
+            except:
+                pass
 
         config.set(profile, 'aws_access_key_id', access_key_id)
         config.set(profile, 'aws_secret_access_key', secret_access_key)
