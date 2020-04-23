@@ -139,7 +139,7 @@ of roles assigned to you.""" % self.role)
             except:
                 pass
         if profile == 'default':
-            dpprofile = 'DEFAULT'
+            dprofile = 'DEFAULT'
         else:
             dprofile = profile
         config.set(dprofile, 'aws_access_key_id', access_key_id)
