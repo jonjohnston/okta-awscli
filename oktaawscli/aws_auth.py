@@ -138,10 +138,13 @@ of roles assigned to you.""" % self.role)
                 config.add_section(profile)
             except:
                 pass
-
-        config.set(profile, 'aws_access_key_id', access_key_id)
-        config.set(profile, 'aws_secret_access_key', secret_access_key)
-        config.set(profile, 'aws_session_token', session_token)
+        if profile = 'default':
+            dpprofile = 'DEFAULT'
+        else:
+            dprofile = profile
+        config.set(dprofile, 'aws_access_key_id', access_key_id)
+        config.set(dprofile, 'aws_secret_access_key', secret_access_key)
+        config.set(dprofile, 'aws_session_token', session_token)
 
         with open(self.creds_file, 'w+') as configfile:
             config.write(configfile)
