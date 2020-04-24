@@ -48,6 +48,8 @@ class AwsAuth():
                 self.logger.info("""Predefined role, %s, not found in the list
 of roles assigned to you.""" % self.role)
                 self.logger.info("Please choose a role.")
+                print("You do not have access to use vaultops-api")
+                sys.exit()
 
         role_options = self.__create_options_from(roles, assertion)
         if not role_options:
