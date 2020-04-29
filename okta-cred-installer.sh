@@ -37,12 +37,6 @@ python --version > /dev/null 2>&1
 if [ $? -ne 0 ]; then
 	echo 'Warning: Python is required. Make sure to install that'
         exit 1
-#else
-#	pythonversion=$(python --version 2>/dev/null | grep "Python 3")
-#	if [ -z "$pythonversion" ]; then
-#		echo 'Python needs to be version 3'
-#		exit 1
-#	fi
 fi
 git --version > /dev/null 2>&1
 if [ $? -ne 0 ]; then
