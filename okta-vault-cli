@@ -3,7 +3,6 @@
 #Kill metadata blocker
 export AWS_METADATA_URL="http://localhost/not/existent/url"
 
-tempfile="$HOME/$(echo $RANDOM)-tmpcreds"
 oktap=""
 
 while getopts a: option
@@ -15,22 +14,8 @@ do
 done
 
 if [ -z "$oktap" ]; then
-	echo "Please run with -a parameter"
+	echo "Please run with -a parameter specifying account"
 	exit 1
 fi
 
-okta-awscli --okta-profile $oktap --profile Test --force
-if [ ! -f ~/.aws/vault-credentials ]; then
-	echo "Credentials not generated"
-	exit 1
-fi
-accesskey=$(cat ~/.aws/vault-credentials | grep aws_access_key_id | awk '{print $3}')
-accesssecret=$(cat ~/.aws/vault-credentials | grep aws_secret_access_key | awk '{print $3}')
-token=$(cat ~/.aws/vault-credentials | grep aws_session_token | awk '{print $3}')
-rm -rf ~/.aws/vault-credentials
-echo "export AWS_ACCESS_KEY_ID=$accesskey" > $tempfile
-echo "export AWS_SECRET_ACCESS_KEY=$accesssecret" >> $tempfile
-echo "export AWS_SESSION_TOKEN=$token" >> $tempfile
-echo "rm -rf $tempfile" >> $tempfile
-echo "Access Key ID: $accesskey"
-echo "Execute following command: source $tempfile"
+okta-awscli --okta-profile $oktap --force
