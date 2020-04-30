@@ -93,7 +93,7 @@ def main(okta_profile, profile, verbose, version,
         print(__version__)
         exit(0)
     # Set up logging
-    logger = logging.getLogger('okta-awscli')
+    logger = logging.getLogger('okta-vault-awscli')
     logger.setLevel(logging.DEBUG)
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)
