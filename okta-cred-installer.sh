@@ -3,6 +3,7 @@
 BASEDIR=$(dirname "$0")
 user=$USER
 localdir=$(pwd)
+AWS=$(which aws)
 unameOut="$(uname -s)"
 case "${unameOut}" in
 	Linux*)     machine=Linux;;
@@ -17,15 +18,16 @@ if [ $machine != "Mac" ]; then
 		echo "Need to run as sudo"
 		exit 1
 	fi
+	AWS='/usr/local/bin/aws'
 fi
 
 LOGFILE="${localdir}/installer.log"
 > $LOGFILE
 # Check prerequisites to make sure they are installed
-aws --version > /dev/null 2>&1
+$AWS --version > /dev/null 2>&1
 if [ $? -ne 0 ]; then
 	rm -f ~/.aws/config ~/.aws/credentials >/dev/null 2>&1
-	aws --version > /dev/null 2>&1
+	$AWS --version > /dev/null 2>&1
 	if [ $? -ne 0 ]; then
         	echo 'Warning: AWS CLI is not installed. Make sure to install that'
         	exit 1
