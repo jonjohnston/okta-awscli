@@ -2,6 +2,10 @@
 
 cliversion='1.0'
 
+newversion=$(curl -s https://raw.githubusercontent.com/jonjohnston/okta-awscli/master/version)
+if [ "$newversion" != "$cliversion" ]; then
+	echo "New version available. Please re-run okta-cred-installer.sh"
+fi
 #Kill metadata blocker
 export AWS_METADATA_URL="http://localhost/not/existent/url"
 

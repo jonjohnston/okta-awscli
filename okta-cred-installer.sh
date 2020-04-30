@@ -40,6 +40,11 @@ if [ $? -ne 0 ]; then
         echo 'Warning: pip is required. Make sure to install that'
         exit 1
 fi
+py2install='n'
+pipversion=$(pip --version | grep python2)
+if [ -z "$pipversion" ]; then
+	py2install='y'
+fi
 git --version > /dev/null 2>&1
 if [ $? -ne 0 ]; then
         echo 'Warning: GIT is required. Make sure to install that'
@@ -49,12 +54,16 @@ aliyuncheck=$(which aliyun)
 if [ -z "$aliyuncheck" ]; then
 	echo "Warning: Aliyun and jq are required if using Alibaba CLI"
 	read -n 1 -s -r -p "Press any key to continue"
+	echo ""
 fi
 
 # Download from git and run the installer
 if [ ! -d ~/okta-awscli ]; then
 	git clone https://github.com/jonjohnston/okta-awscli.git ~/okta-awscli/ >/dev/null 2>&1
 	cd ~/okta-awscli/
+	if [ $py2install = 'y' ]; then
+		pip2 install -r requirements.txt >/dev/null 2>&1
+	fi
 	python setup.py install >/dev/null 2>&1
 	rm -rf ~/okta-awscli
 fi
