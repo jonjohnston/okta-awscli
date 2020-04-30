@@ -2,7 +2,7 @@
 
 BASEDIR=$(dirname "$0")
 user=$USER
-local=$(pwd)
+localdir=$(pwd)
 unameOut="$(uname -s)"
 case "${unameOut}" in
 	Linux*)     machine=Linux;;
@@ -19,7 +19,7 @@ if [ $machine != "Mac" ]; then
 	fi
 fi
 
-LOGFILE="${local}/installer.log"
+LOGFILE="${localdir}/installer.log"
 > $LOGFILE
 # Check prerequisites to make sure they are installed
 aws --version > /dev/null 2>&1
@@ -36,14 +36,14 @@ if [ $? -ne 0 ]; then
 	echo 'Warning: Python is required. Make sure to install that'
         exit 1
 fi
+pythonversion=$(python --version | grep "Python 3")
 pip --version > /dev/null 2>&1
 if [ $? -ne 0 ]; then
         echo 'Warning: pip is required. Make sure to install that'
         exit 1
 fi
 py2install='n'
-pipversion=$(pip --version | grep python2)
-if [ -z "$pipversion" ]; then
+if [ -z "$pythonversion" ]; then
 	py2install='y'
 fi
 git --version > /dev/null 2>&1
@@ -59,32 +59,32 @@ if [ -z "$aliyuncheck" ]; then
 fi
 
 # Download from git and run the installer
-if [ ! -d ~/okta-awscli ]; then
-	git clone https://github.com/jonjohnston/okta-awscli.git ~/okta-awscli/ >/dev/null 2>&1
-	cd ~/okta-awscli/
-	if [ $py2install = 'y' ]; then
-		pip2 install -r requirements.txt >/dev/null 2>&1
-	fi
-	python setup.py install >/dev/null 2>&1
+git clone https://github.com/jonjohnston/okta-awscli.git ~/okta-awscli/ >/dev/null 2>&1
+cd ~/okta-awscli/
+if [ $py2install = 'y' ]; then
+	pip2 install -r requirements.txt >/dev/null 2>&1
+else
+	pip install -r requirements.txt >/dev/null 2>&1
 fi
+python setup.py install >/dev/null 2>&1
 
 # Copy files
-cp .okta-aws ~/ >/dev/null 2>>$LOGFILE
+cp ~/okta-awscli/.okta-aws ~/ >/dev/null 2>>$LOGFILE
 if [ ! -d ~/.aliyun ]; then
 	mkdir -p ~/.aliyun 2>>$LOGFILE
 fi
-chmod +x ./okta-cli >/dev/null 2>>$LOGFILE
-chmod +x ./aliyun-cli >/dev/null 2>>$LOGFILE
-cp ./okta-cli /usr/local/bin >/dev/null 2>&1
-cp ./aliyun-cli /usr/local/bin >/dev/null 2>>$LOGFILE
-cp ./aliyun.py /usr/local/bin >/dev/null 2>>$LOGFILE
-cp ./aliyun-config.json ~/.aliyun/ >/dev/null 2>>$LOGFILE
-cp ./okta-cred-installer.sh $local/ >/dev/null 2>>$LOGFILE
-cd $local
+chmod +x ~/okta-awscli//okta-cli >/dev/null 2>>$LOGFILE
+chmod +x ~/okta-awscli/aliyun-cli >/dev/null 2>>$LOGFILE
+cp ~/okta-awscli/okta-cli /usr/local/bin/ >/dev/null 2>>$LOGFILE
+cp ~/okta-awscli/aliyun-cli /usr/local/bin/ >/dev/null 2>>$LOGFILE
+cp ~/okta-awscli/aliyun.py /usr/local/bin/ >/dev/null 2>>$LOGFILE
+cp ~/okta-awscli/aliyun-config.json ~/.aliyun/ >/dev/null 2>>$LOGFILE
+cp ~/okta-awscli/okta-cred-installer.sh $localdir/ >/dev/null 2>>$LOGFILE
+cd $localdir
 rm -rf ~/okta-awscli
-# Check for errors
-errors=$(cat $LOGFILE)
-if [ "$errors" = "" ]; then
+
+myerrors=$(cat $LOGFILE)
+if [ "$myerrors" = "" ]; then
 	echo "Install has completed successfully. Run okta-cli"
 	rm -f $LOGFILE
 else
