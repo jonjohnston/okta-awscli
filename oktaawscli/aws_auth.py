@@ -180,11 +180,14 @@ of roles assigned to you.""" % self.role)
                                   aws_secret_access_key = secret_access_key,
                                   aws_session_token = session_token,
                                   region_name = iam_region)
-            alias = client.list_account_aliases()['AccountAliases'][0]
-            rolename = role.role_arn.split(':')[5]
-            options.append('{i}: {accname} - {rolename}'.format(i=index+1,
+            try:
+                alias = client.list_account_aliases()['AccountAliases'][0]
+                rolename = role.role_arn.split(':')[5]
+                options.append('{i}: {accname} - {rolename}'.format(i=index+1,
                                                               accname = alias,
                                                               rolename = rolename))
+            except:
+                options.append("%d: %s" % (index + 1, role.role_arn))
         return options
 
     def __find_predefined_role_from(self, roles):
