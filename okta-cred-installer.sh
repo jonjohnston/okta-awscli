@@ -79,7 +79,6 @@ cp ~/okta-awscli/okta-cli /usr/local/bin/ >/dev/null 2>>$LOGFILE
 cp ~/okta-awscli/aliyun-cli /usr/local/bin/ >/dev/null 2>>$LOGFILE
 cp ~/okta-awscli/aliyun.py /usr/local/bin/ >/dev/null 2>>$LOGFILE
 cp ~/okta-awscli/aliyun-config.json ~/.aliyun/ >/dev/null 2>>$LOGFILE
-cp ~/okta-awscli/okta-cred-installer.sh $localdir/ >/dev/null 2>>$LOGFILE
 cd $localdir
 rm -rf ~/okta-awscli
 
