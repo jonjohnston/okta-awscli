@@ -65,24 +65,22 @@ if [ ! -d ~/okta-awscli ]; then
 		pip2 install -r requirements.txt >/dev/null 2>&1
 	fi
 	python setup.py install >/dev/null 2>&1
-	rm -rf ~/okta-awscli
 fi
 
-cd $local
 # Copy files
-if [ ! -f ~/.okta-aws ]; then
-	cp $BASEDIR/.okta-aws ~/ >/dev/null 2>>$LOGFILE
-fi
+cp .okta-aws ~/ >/dev/null 2>>$LOGFILE
 if [ ! -d ~/.aliyun ]; then
 	mkdir -p ~/.aliyun 2>>$LOGFILE
 fi
-chmod +x $BASEDIR/okta-cli >/dev/null 2>>$LOGFILE
-chmod +x $BASEDIR/aliyun-cli >/dev/null 2>>$LOGFILE
-cp $BASEDIR/okta-cli /usr/local/bin >/dev/null 2>&1
-cp $BASEDIR/aliyun-cli /usr/local/bin >/dev/null 2>>$LOGFILE
-cp $BASEDIR/aliyun.py /usr/local/bin >/dev/null 2>>$LOGFILE
-cp $BASEDIR/aliyun-config.json ~/.aliyun/ >/dev/null 2>>$LOGFILE
-
+chmod +x ./okta-cli >/dev/null 2>>$LOGFILE
+chmod +x ./aliyun-cli >/dev/null 2>>$LOGFILE
+cp ./okta-cli /usr/local/bin >/dev/null 2>&1
+cp ./aliyun-cli /usr/local/bin >/dev/null 2>>$LOGFILE
+cp ./aliyun.py /usr/local/bin >/dev/null 2>>$LOGFILE
+cp ./aliyun-config.json ~/.aliyun/ >/dev/null 2>>$LOGFILE
+cp ./okta-cred-installer.sh $local/ >/dev/null 2>>$LOGFILE
+cd $local
+rm -rf ~/okta-awscli
 # Check for errors
 errors=$(cat $LOGFILE)
 if [ "$errors" = "" ]; then
