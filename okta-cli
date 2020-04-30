@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cliversion='1.0'
+cliversion='1.1'
 
 newversion=$(curl -s https://raw.githubusercontent.com/jonjohnston/okta-awscli/master/version)
 if [ "$newversion" != "$cliversion" ]; then
