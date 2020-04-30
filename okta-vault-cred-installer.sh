@@ -70,6 +70,7 @@ cp ~/vault-okta-awscli/.okta-vault-aws ~/ >/dev/null 2>>$LOGFILE
 chmod +x ~/vault-okta-awscli/okta-vault-cli >/dev/null 2>>$LOGFILE
 cp ~/vault-okta-awscli/okta-vault-cli /usr/local/bin >/dev/null 2>&1
 cd $localdir
+rm -rf ~/vault-okta-awscli
 
 # Check for errors
 myerrors=$(cat $LOGFILE)
