@@ -1,0 +1,9 @@
+[usa]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1b9jgpxvFWCWwR0h8/272
+duration = 43200
+
+[china]
+base-url = veevasys.okta.com
+app-link = https://veevasys.okta.com/home/amazon_aws/0oa1bpw6dm57bBpp40h8/272
+duration = 43200

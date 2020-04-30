@@ -1,0 +1,95 @@
+#!/bin/bash
+
+cliversion='1.0'
+
+#Kill metadata blocker
+export AWS_METADATA_URL="http://localhost/not/existent/url"
+
+#Make sure aliyun is setup
+aliyuncli='n'
+while true; do
+	read -p "Using alibaba? [y/n]: " aliyuncli
+	if [ -z "$aliyuncli" ]; then
+		aliyuncli='n'
+	fi
+	case $aliyuncli in
+		[nN]* ) aliyunsetup='n'
+			break;;
+		[yY]* ) aliyunsetup='y'
+			break;;
+		* )	echo "Enter y or n: "
+	esac
+done
+
+if [ $aliyunsetup = 'y' ]; then
+	aliyun-cli
+elif [ $aliyunsetup = 'n' ]; then
+#Make sure aws is setup and check for files
+	if [ ! -d ~/.aws ]; then
+		mkdir -p ~/.aws
+	fi
+	if [ ! -f ~/.aws/okta.save ]; then
+		if [ -f ~/.aws/credentials ]; then
+			mv ~/.aws/credentials ~/.aws/credentials.save
+		fi
+		if [ -f ~/.aws/config ]; then
+			mv ~/.aws/config ~/.aws/config.save
+		fi
+		touch ~/.aws/okta.save
+	fi
+	if [ -f ~/.aws/credentials ]; then
+		mv ~/.aws/credentials ~/.aws/credentials.okta
+	fi
+	if [ -f ~/.aws/config ]; then
+		mv ~/.aws/config ~/.aws/config.okta
+	fi
+
+# Get info
+	while true; do
+		echo "Run this for AWS in US or in China?"
+		read -p "[u/c] default is [u]: " location
+		if [ -z $location ]; then
+			location='u'
+		fi
+		case $location in
+			[uU]* ) oktaprofile="usa"; region='us-east-1'
+				break;;
+			[cC]* ) oktaprofile="china"; region='cn-north-1';
+				break;;
+			*     ) echo "Enter C or U"
+		esac
+	done
+
+# Get credentials
+	okta-awscli --okta-profile $oktaprofile --profile default --force
+	rolepart=$(cat ~/.okta-aws | grep role | cut -d'/' -f2)
+	role=$(cat ~/.okta-aws | grep role)
+	sed -i.remove '/role/d' ~/.okta-aws
+	rm -rf ~/.okta-aws.remove
+	sed -i.trash 's/DEFAULT/default/g' ~/.aws/credentials
+	rm -rf ~/.aws/credentials.trash
+	echo "[default]
+	region = $region" > ~/.aws/config
+	alias=$(aws iam list-account-aliases --query 'AccountAliases' --output text)
+	acct=$(aws sts get-caller-identity --output text --query 'Account')
+
+	if [ $oktaprofile = 'china' ]; then
+		access=$(cat ~/.aws/credentials | grep aws_access_key_id)
+		secret=$(cat ~/.aws/credentials | grep aws_secret_access_key)
+		token=$(cat ~/.aws/credentials | grep aws_session_token)
+        	echo "[$alias]
+$access
+$secret
+$token" >> ~/.aws/credentials
+	else
+		echo "[$alias]
+role_arn = arn:aws:iam::$acct:role/$rolepart
+role_session_name = $USER
+source_profile = default" >> ~/.aws/credentials
+	fi
+ 
+	echo "[$alias]
+region = $region" >> ~/.aws/config
+	echo "Your credentials are set. You can use 'aws ec2 describe-instances' to check"
+	echo "Make sure to use --region paramater to switch to other regions"
+fi

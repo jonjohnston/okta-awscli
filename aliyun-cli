@@ -1,0 +1,46 @@
+#!/bin/bash
+
+filepath='/tmp/aliyunsaml'
+
+#Checks
+python --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+	echo "Python is required"
+	exit 1
+fi
+jq --version >/dev/null 2>&1
+if [ $? -ne 0 ]; then
+	echo "jq is required"
+	exit 1
+fi
+aliyuncheck=$(which aliyun)
+if [ -z "$aliyuncheck" ]; then
+	echo "Aliyun CLI is required"
+	exit 1
+fi
+
+#Starting process
+if [ ! -f ~/.aliyun/aliyun-config.json ]; then
+	echo "Need config file. Please re-run installer"
+	exit 1
+fi
+cp ~/.aliyun/aliyun-config.json ~/.aliyun/config.json
+python /usr/local/bin/aliyun.py
+if [ -f $filepath ]; then
+	role_arn=$(cat $filepath | awk '{print $2}')
+	provider_arn=$(cat $filepath | awk '{print $1}')
+	assert=$(cat $filepath | awk '{print $3}')
+	creds=$(aliyun sts AssumeRoleWithSAML --RoleArn $role_arn --SAMLProviderArn $provider_arn --SAMLAssertion $assert)
+	accesskey=$(echo $creds | jq .Credentials.AccessKeyId | tr -d '"')
+	secretkey=$(echo $creds | jq .Credentials.AccessKeySecret | tr -d '"')
+	tokenkey=$(echo $creds | jq .Credentials.SecurityToken | tr -d '"')
+	cat ~/.aliyun/config.json | jq '.profiles[].mode="StsToken"' | jq ".profiles[].access_key_id=\"$accesskey\"" | jq ".profiles[].access_key_secret=\"$secretkey\"" | jq ".profiles[].sts_token=\"$tokenkey\"" > ~/.aliyun-temp.json
+	mv ~/.aliyun-temp.json ~/.aliyun/config.json
+	rm -f $filepath
+	echo "Credentials set"
+	echo "Please use 'aliyun help' to see what your options are"
+	echo "Make sure to use --region parameter to switch regions"
+else
+	echo "Something went wrong. Try again"
+	exit 1
+fi

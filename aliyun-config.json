@@ -1,0 +1,27 @@
+{
+	"current": "default",
+	"profiles": [
+		{
+			"name": "default",
+			"mode": "AK",
+			"access_key_id": "LTAI4FvAfXgMsn7Rv8VJTXr2",
+			"access_key_secret": "kGT2nk7j6FRgyThAwzQaBdGFYz9pQS",
+			"sts_token": "",
+			"ram_role_name": "",
+			"ram_role_arn": "",
+			"ram_session_name": "",
+			"private_key": "",
+			"key_pair_name": "",
+			"expired_seconds": 0,
+			"verified": "",
+			"region_id": "us-east-1",
+			"output_format": "json",
+			"language": "en",
+			"site": "",
+			"retry_timeout": 0,
+			"connect_timeout": 0,
+			"retry_count": 0
+		}
+	],
+	"meta_path": ""
+}
