@@ -82,12 +82,14 @@ elif [ $aliyunsetup = 'n' ]; then
 		access=$(cat ~/.aws/credentials | grep aws_access_key_id)
 		secret=$(cat ~/.aws/credentials | grep aws_secret_access_key)
 		token=$(cat ~/.aws/credentials | grep aws_session_token)
-        	echo "[$alias]
+        	echo "
+[$alias]
 $access
 $secret
 $token" >> ~/.aws/credentials
 	else
-		echo "[$alias]
+		echo "
+[$alias]
 role_arn = arn:aws:iam::$acct:role/$rolepart
 role_session_name = $USER
 source_profile = default" >> ~/.aws/credentials
