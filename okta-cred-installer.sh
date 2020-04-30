@@ -13,7 +13,7 @@ case "${unameOut}" in
 esac
 
 if [ $machine != "Mac" ]; then
-	if (whoami != root); then 
+	if [ $(whoami) != 'root' ]; then 
 		echo "Need to run as sudo"
 	fi
 fi
