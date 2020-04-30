@@ -71,7 +71,7 @@ fi
 python setup.py install >/dev/null 2>&1
 
 # Copy files
-cp ~/okta-awscli/.okta-aws ~/ >/dev/null 2>>$LOGFILE
+cp ~/okta-awscli/.okta-veeva-aws ~/ >/dev/null 2>>$LOGFILE
 if [ ! -d ~/.aliyun ]; then
 	mkdir -p ~/.aliyun 2>>$LOGFILE
 fi
