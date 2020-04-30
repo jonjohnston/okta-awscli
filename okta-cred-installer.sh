@@ -15,6 +15,7 @@ esac
 if [ $machine != "Mac" ]; then
 	if [ $(whoami) != 'root' ]; then 
 		echo "Need to run as sudo"
+		exit 1
 	fi
 fi
 
