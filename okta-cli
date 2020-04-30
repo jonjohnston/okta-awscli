@@ -65,7 +65,7 @@ elif [ $aliyunsetup = 'n' ]; then
 	done
 
 # Get credentials
-	okta-awscli --okta-profile $oktaprofile --profile default --force
+	okta-awscli --okta-profile $oktaprofile --profile DEFAULT --force
 	rolepart=$(cat ~/.okta-aws | grep role | cut -d'/' -f2)
 	role=$(cat ~/.okta-aws | grep role)
 	sed -i.remove '/role/d' ~/.okta-aws
