@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cliversion='1.0'
+cliversion='1.1'
 
 newversion=$(curl -s https://raw.githubusercontent.com/jonjohnston/okta-awscli/okta-vault-cli/version)
 if [ "$newversion" != "$cliversion" ]; then
@@ -25,4 +25,4 @@ if [ -z "$oktap" ]; then
 	exit 1
 fi
 
-okta-awscli --okta-profile $oktap --force
+okta-vault-awscli --okta-profile $oktap --force

@@ -2,7 +2,7 @@
 
 BASEDIR=$(dirname "$0")
 user=$USER
-local=$(pwd)
+localdir=$(pwd)
 unameOut="$(uname -s)"
 AWS=$(which aws)
 case "${unameOut}" in
@@ -14,14 +14,14 @@ case "${unameOut}" in
 esac
 
 if [ $machine != "Mac" ]; then
-	if [ $(whoami) != root ]; then 
+	if [ $(whoami) != 'root' ]; then 
 		echo "Need to run as sudo"
 		exit 1
 	fi
 	AWS='/usr/local/bin/aws'
 fi
 
-LOGFILE="${local}/installer.log"
+LOGFILE="${localdir}/installer.log"
 > $LOGFILE
 # Check prerequisites to make sure they are installed
 $AWS --version > /dev/null 2>&1
@@ -38,6 +38,16 @@ if [ $? -ne 0 ]; then
 	echo 'Warning: Python is required. Make sure to install that'
         exit 1
 fi
+pythonversion=$(python --version | grep "Python 3")
+pip --version > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+        echo 'Warning: pip is required. Make sure to install that'
+        exit 1
+fi
+py2install='n'
+if [ -z "$pythonversion" ]; then
+        py2install='y'
+fi
 git --version > /dev/null 2>&1
 if [ $? -ne 0 ]; then
         echo 'Warning: GIT is required. Make sure to install that'
@@ -45,24 +55,25 @@ if [ $? -ne 0 ]; then
 fi
 
 # Download from git and run the installer
-if [ ! -d ~/okta-awscli ]; then
-	git clone -b okta-vault-cli https://github.com/jonjohnston/okta-awscli.git ~/vault-okta-awscli/ >/dev/null 2>&1
-	cd ~/vault-okta-awscli/
-	python setup.py install >/dev/null 2>&1
-	rm -rf ~/vault-okta-awscli
+git clone -b okta-vault-cli https://github.com/jonjohnston/okta-awscli.git ~/vault-okta-awscli/ >/dev/null 2>&1
+cd ~/vault-okta-awscli/
+if [ $py2install = 'y' ]; then
+        pip2 install -r requirements.txt >/dev/null 2>&1
+else
+        pip install -r requirements.txt >/dev/null 2>&1
 fi
 
-cd $local
+python setup.py install >/dev/null 2>&1
+
 # Copy files
-if [ ! -f ~/.okta-aws ]; then
-	cp $BASEDIR/.okta-aws ~/ >/dev/null 2>>$LOGFILE
-fi
-chmod +x $BASEDIR/okta-vault-cli >/dev/null 2>>$LOGFILE
-cp $BASEDIR/okta-vault-cli /usr/local/bin >/dev/null 2>&1
+cp ~/vault-okta-awscli/.okta-vault-aws ~/ >/dev/null 2>>$LOGFILE
+chmod +x ~/vault-okta-awscli/okta-vault-cli >/dev/null 2>>$LOGFILE
+cp ~/vault-okta-awscli/okta-vault-cli /usr/local/bin >/dev/null 2>&1
+cd $localdir
 
 # Check for errors
-errors=$(cat $LOGFILE)
-if [ "$errors" = "" ]; then
+myerrors=$(cat $LOGFILE)
+if [ "$myerrors" = "" ]; then
 	echo "Install has completed successfully. Run okta-vault-cli"
 	rm -f $LOGFILE
 else
