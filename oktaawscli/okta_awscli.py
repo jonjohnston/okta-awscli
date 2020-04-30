@@ -66,7 +66,7 @@ def console_output(access_key_id, secret_access_key, session_token, session_expi
     """ Outputs STS credentials to console """
     if verbose:
         print("Use these to set your environment variables:")
-    expiry_date = _serialize_if_needed(session_expiry)
+    expire_date = _serialize_if_needed(session_expiry)
     exports = "\n".join([
         "{",
         "    \"AccessKeyId\":\"%s\"," % access_key_id,
