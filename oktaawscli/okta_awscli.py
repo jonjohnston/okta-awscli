@@ -40,7 +40,7 @@ def get_credentials(aws_auth, okta_profile, profile,
     logger.info("Session token expires on: %s" % session_token_expiry)
     if not profile:
         exports = console_output(access_key_id, secret_access_key,
-                                 session_token, verbose)
+                                 session_token, session_token_expiry, verbose)
         if cache:
             cache = open("%s/.okta-credentials.cache" %
                          (os.path.expanduser('~'),), 'w')
@@ -54,14 +54,17 @@ def get_credentials(aws_auth, okta_profile, profile,
         #                         secret_access_key, session_token)
 
 
-def console_output(access_key_id, secret_access_key, session_token, verbose):
+def console_output(access_key_id, secret_access_key, session_token, session_expiry, verbose):
     """ Outputs STS credentials to console """
     if verbose:
         print("Use these to set your environment variables:")
     exports = "\n".join([
-        "AWS_ACCESS_KEY_ID=%s" % access_key_id,
-        "AWS_SECRET_ACCESS_KEY=%s" % secret_access_key,
-        "AWS_SESSION_TOKEN=%s" % session_token
+        "{",
+        "    \"AccessKeyId\":\"%s\"" % access_key_id,
+        "    \"SecretAccessKey\":\"%s\"" % secret_access_key,
+        "    \"SessionToken\":\"%s\"" % session_token,
+        "    \"Expiration\":\"%s\"" % session_expiry,
+        "}"
     ])
     print(exports)
 
