@@ -1,6 +1,7 @@
 """ Wrapper script for awscli which handles Okta auth """
 # pylint: disable=C0325,R0913,R0914
 import os
+import datetime
 from subprocess import call
 import logging
 import click
@@ -8,6 +9,13 @@ from oktaawscli.version import __version__
 from oktaawscli.okta_auth import OktaAuth
 from oktaawscli.okta_auth_config import OktaAuthConfig
 from oktaawscli.aws_auth import AwsAuth
+
+def _serialize_if_needed(value, iso=False):
+    if isinstance(value, datetime.datetime):
+        if iso:
+            return value.isoformat()
+        return value.strftime('%Y-%m-%dT%H:%M:%SZ')
+    return value
 
 def get_credentials(aws_auth, okta_profile, profile,
                     verbose, logger, totp_token, cache):
@@ -58,12 +66,13 @@ def console_output(access_key_id, secret_access_key, session_token, session_expi
     """ Outputs STS credentials to console """
     if verbose:
         print("Use these to set your environment variables:")
+    expiry_date = _serialize_if_needed(session_expiry)
     exports = "\n".join([
         "{",
-        "    \"AccessKeyId\":\"%s\"" % access_key_id,
-        "    \"SecretAccessKey\":\"%s\"" % secret_access_key,
-        "    \"SessionToken\":\"%s\"" % session_token,
-        "    \"Expiration\":\"%s\"" % session_expiry,
+        "    \"AccessKeyId\":\"%s\"," % access_key_id,
+        "    \"SecretAccessKey\":\"%s\"," % secret_access_key,
+        "    \"SessionToken\":\"%s\"," % session_token,
+        "    \"Expiration\":\"%s\"" % expire_date,
         "}"
     ])
     print(exports)
