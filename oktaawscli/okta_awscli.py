@@ -76,7 +76,7 @@ def console_output(access_key_id, secret_access_key, session_token, verbose):
 @click.option('-d', '--debug', is_flag=True, help='Enables debug mode')
 @click.option('-f', '--force', is_flag=True, help='Forces new STS credentials. \
 Skips STS credentials validation.')
-@click.option('--okta-profile', help="Name of the profile to use in .okta-vault-aws. \
+@click.option('--okta-profile', help="Name of the profile to use in .okta-aws. \
 If none is provided, then the default profile will be used.\n")
 @click.option('--profile', help="Name of the profile to store temporary \
 credentials in ~/.aws/vault-credentials. If profile doesn't exist, it will be \
@@ -93,7 +93,7 @@ def main(okta_profile, profile, verbose, version,
         print(__version__)
         exit(0)
     # Set up logging
-    logger = logging.getLogger('okta-vault-awscli')
+    logger = logging.getLogger('okta-awscli')
     logger.setLevel(logging.DEBUG)
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)

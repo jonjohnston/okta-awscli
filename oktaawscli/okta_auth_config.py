@@ -17,7 +17,7 @@ class OktaAuthConfig():
     """ Config helper class """
     def __init__(self, logger):
         self.logger = logger
-        self.config_path = os.path.expanduser('~') + '/.okta-vault-aws'
+        self.config_path = os.path.expanduser('~') + '/.okta-aws'
         self._value = RawConfigParser()
         self._value.read(self.config_path)
 

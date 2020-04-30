@@ -4,7 +4,7 @@ here = os.path.abspath(os.path.dirname(__file__))
 exec(open(os.path.join(here, 'oktaawscli/version.py')).read())
 
 setup(
-    name='okta-vault-awscli',
+    name='okta-awscli',
     version=__version__,
     description='Provides a wrapper for Okta authentication to awscli',
     packages=find_packages(),
@@ -14,7 +14,7 @@ setup(
     url='https://github.com/jonjohnston/okta-awscli',
     entry_points={
         'console_scripts': [
-            'okta-vault-awscli=oktaawscli.okta_awscli:main',
+            'okta-awscli=oktaawscli.okta_awscli:main',
         ],
     },
     install_requires=[

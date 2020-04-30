@@ -6,7 +6,7 @@ newversion=$(curl -s https://raw.githubusercontent.com/jonjohnston/okta-awscli/o
 if [ "$newversion" != "$cliversion" ]; then
         echo "New version available. Please re-run okta-cred-installer.sh"
 fi
-
+cp ~/.okta-vault-aws ~/.okta-aws
 #Kill metadata blocker
 export AWS_METADATA_URL="http://localhost/not/existent/url"
 
@@ -25,4 +25,4 @@ if [ -z "$oktap" ]; then
 	exit 1
 fi
 
-okta-vault-awscli --okta-profile $oktap --force
+okta-awscli --okta-profile $oktap --force
