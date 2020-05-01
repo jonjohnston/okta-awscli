@@ -1,10 +1,14 @@
 #!/bin/bash
 
 cliversion='1.2.1'
-
+installerversion='1.0'
 newversion=$(curl -s https://raw.githubusercontent.com/jonjohnston/okta-awscli/okta-vault-cli/version)
+newinstaller=$(curl -s https://raw.githubusercontent.com/jonjohnston/okta-awscli/okta-vault-cli/installversion)
 if [ "$newversion" != "$cliversion" ]; then
         echo "New version available. Please re-run okta-cred-installer.sh"
+fi
+if [ "$newinstaller" != "$installerversion" ]; then
+	echo "New installer available. Please download: "
 fi
 cp ~/.okta-vault-aws ~/.okta-aws
 #Kill metadata blocker
