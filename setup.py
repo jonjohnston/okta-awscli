@@ -1,20 +1,20 @@
 from setuptools import setup, find_packages, os
 
 here = os.path.abspath(os.path.dirname(__file__))
-exec(open(os.path.join(here, 'oktaawscli/version.py')).read())
+exec(open(os.path.join(here, 'oktavaultawscli/version.py')).read())
 
 setup(
-    name='okta-awscli',
+    name='okta-vault-awscli',
     version=__version__,
     description='Provides a wrapper for Okta authentication to awscli',
     packages=find_packages(),
     license='Apache License 2.0',
     author='Jonathan Johnston',
     author_email='jon.johnston@veeva.com',
-    url='https://github.com/jonjohnston/okta-awscli',
+    url='https://github.com/jonjohnston/okta-vault-awscli',
     entry_points={
         'console_scripts': [
-            'okta-awscli=oktaawscli.okta_awscli:main',
+            'okta-vault-awscli=oktavaultawscli.okta_awscli:main',
         ],
     },
     install_requires=[

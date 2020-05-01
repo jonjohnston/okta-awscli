@@ -1,4 +1,4 @@
-# okta-awscli - Retrieve AWS credentials from Okta
+# okta-vault-awscli - Retrieve AWS credentials from Okta
 
 Master branch: [![Build Status - master](https://travis-ci.org/jmhale/okta-awscli.svg?branch=master)](https://travis-ci.org/jmhale/okta-awscli)
 
@@ -13,9 +13,9 @@ Parsing the HTML is still required to get the SAML assertion, after authenticati
 
 ## Installation
 
-- `pip install okta-awscli`
+- `pip install okta-vault-awscli`
   - To install with U2F support (Yubikey): `pip install "okta-awscli[U2F]"`
-- Configure okta-awscli via the `~/.okta-aws` file with the following parameters:
+- Configure okta-vault-awscli via the `~/.okta-vault-aws` file with the following parameters:
 
 ```
 [default]
@@ -42,7 +42,7 @@ duration = 3600 # duration in seconds to request a session token for, make sure 
 
 ## Usage
 
-`okta-awscli --profile <aws_profile> <awscli action> <awscli arguments>`
+`okta-vault-awscli --profile <aws_profile> <awscli action> <awscli arguments>`
 - Follow the prompts to enter MFA information (if required) and choose your AWS app and IAM role.
 - Subsequent executions will first check if the STS credentials are still valid and skip Okta authentication if so.
 - Multiple Okta profiles are supported, but if none are specified, then `default` will be used.
@@ -50,7 +50,7 @@ duration = 3600 # duration in seconds to request a session token for, make sure 
 
 ### Example
 
-`okta-awscli --profile my-aws-account iam list-users`
+`okta-vault-awscli --profile my-aws-account iam list-users`
 
 If no awscli commands are provided, then okta-awscli will simply output STS credentials to your credentials file, or console, depending on how `--profile` is set.
 

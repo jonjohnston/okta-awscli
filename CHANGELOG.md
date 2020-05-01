@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.2] 2020-05-01
+### Added:
+- Moved to new
+ - Thats to: [@jonjohnston](https://gitub.com/jonjohnston)
+
 ## [0.4.1] 2020-02-25
 ### Added:
 - Pipenv support

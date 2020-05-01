@@ -125,7 +125,7 @@ Please enroll an MFA factor in the Okta Web UI first!""")
                     if self.factor == factor_provider:
                         factor_choice = index
                         self.logger.info("Using pre-selected factor choice \
-                                         from ~/.okta-aws")
+                                         from ~/.okta-vault-aws")
                         break
                 else:
                     print("%d: %s" % (index + 1, factor_name))

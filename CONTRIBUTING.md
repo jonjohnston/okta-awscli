@@ -9,7 +9,7 @@ We only ask that you follow the guidelines before before submitting your Pull Re
 git clone git@github.com:your-username/okta-awscli.git
 ```
 
-- Create a `~/.okta-aws` file, per the README.
+- Create a `~/.okta-vault-aws` file, per the README.
 
 It's highly recommended to use virtualenv!
 
@@ -27,7 +27,7 @@ pipenv install --dev && pipenv shell
   - Currently, automated builds are only checking for actual errors, as there are some refactoring and other such notices that need to be resolved.
   - You can safely run `pylint --errors-only oktaawscli` to replicate what the build will be checking.
 
-- Increment the version in `oktaawscli/version.py`, according to [SemVer](https://semver.org/).
+- Increment the version in `oktavaultawscli/version.py`, according to [SemVer](https://semver.org/).
 
 - Be sure to document your changes in CHANGELOG.
 

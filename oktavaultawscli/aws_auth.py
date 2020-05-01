@@ -27,7 +27,7 @@ class AwsAuth():
         self.logger = logger
         self.role = ""
 
-        okta_config = home_dir + '/.okta-aws'
+        okta_config = home_dir + '/.okta-vault-aws'
         parser = RawConfigParser()
         parser.read(okta_config)
 

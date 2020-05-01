@@ -5,10 +5,10 @@ import datetime
 from subprocess import call
 import logging
 import click
-from oktaawscli.version import __version__
-from oktaawscli.okta_auth import OktaAuth
-from oktaawscli.okta_auth_config import OktaAuthConfig
-from oktaawscli.aws_auth import AwsAuth
+from oktavaultawscli.version import __version__
+from oktavaultawscli.okta_auth import OktaAuth
+from oktavaultawscli.okta_auth_config import OktaAuthConfig
+from oktavaultawscli.aws_auth import AwsAuth
 
 def _serialize_if_needed(value, iso=False):
     if isinstance(value, datetime.datetime):
@@ -88,7 +88,7 @@ def console_output(access_key_id, secret_access_key, session_token, session_expi
 @click.option('-d', '--debug', is_flag=True, help='Enables debug mode')
 @click.option('-f', '--force', is_flag=True, help='Forces new STS credentials. \
 Skips STS credentials validation.')
-@click.option('--okta-profile', help="Name of the profile to use in .okta-aws. \
+@click.option('--okta-profile', help="Name of the profile to use in .okta-vault-aws. \
 If none is provided, then the default profile will be used.\n")
 @click.option('--profile', help="Name of the profile to store temporary \
 credentials in ~/.aws/vault-credentials. If profile doesn't exist, it will be \
@@ -105,7 +105,7 @@ def main(okta_profile, profile, verbose, version,
         print(__version__)
         exit(0)
     # Set up logging
-    logger = logging.getLogger('okta-awscli')
+    logger = logging.getLogger('okta-vault-awscli')
     logger.setLevel(logging.DEBUG)
     handler = logging.StreamHandler()
     handler.setLevel(logging.WARN)

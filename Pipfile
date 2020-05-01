@@ -9,7 +9,7 @@ click = "==7.0"
 bs4 = "==0.0.1"
 boto3 = "==1.9.71"
 configparser = "==3.5.0"
-okta-awscli = {path = "."}
+okta-vault-awscli = {path = "."}
 
 [dev-packages]
 pylint = "*"
