@@ -29,4 +29,4 @@ if [ -z "$oktap" ]; then
 	exit 1
 fi
 
-okta-awscli --okta-profile $oktap --force
+okta-vault-awscli --okta-profile $oktap --force
