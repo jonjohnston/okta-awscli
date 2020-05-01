@@ -10,7 +10,7 @@ fi
 if [ "$newinstaller" != "$installerversion" ]; then
 	echo "New installer available. Please download: "
 fi
-cp ~/.okta-vault-aws ~/.okta-aws
+#cp ~/.okta-vault-aws ~/.okta-aws
 #Kill metadata blocker
 export AWS_METADATA_URL="http://localhost/not/existent/url"
 
