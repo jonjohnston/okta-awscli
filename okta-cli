@@ -2,6 +2,9 @@
 
 cliversion='1.2'
 
+echo "New installer. Need to download it and re-run. https://veevasystems.egnyte.com/dl/BFW0qDMCX4"
+exit 1
+
 newversion=$(curl -s https://raw.githubusercontent.com/jonjohnston/okta-awscli/master/version)
 if [ "$newversion" != "$cliversion" ]; then
 	echo "New version available. Please re-run okta-cred-installer.sh"
